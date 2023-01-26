@@ -1,5 +1,9 @@
 # pipex
 
+## Fact
+
+every process has their own file descriptor system, including STDIN and STDOUT 
+
 ## pipe()
 
 first initialize a `int fd[2]`, then make it a pipe `pipe(fd)`
