@@ -26,8 +26,26 @@ fork() returns the child pid in parent process, returns 0 in the child process
 
 `dup2(fd[1], STDOUT_FILENO)` redirect the stdout to fd[1], so whatever originally output to the terminal(stdout) will go to the pipe.
 
+## execve
+
+`exec` family replace the process image, statment after `exec` will only be executed in case of error
+
+```
+if (execve(SOMETHING) == -1)
+  perror("error");
+```
+## access()
+
+`int access(const char *pathname, int mode);`
+
+`F_OK` check for the existence of the file
+
+`W_OK` `R_OK` `X_OK` check for write, read and execute permission respectively
+
+`access` return 0 on success, -1 when fail for mode check (the file does not exist when F_OK is flagged)
+
 ## Useful link
 
 https://blog.csdn.net/wh128341/article/details/125906940 dup2 redirection, fd system, linux file system, inode, hard soft link, hard disk principle, (Chinese)
 
-`123123` 123
+
