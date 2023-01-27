@@ -23,3 +23,7 @@ fork() returns the child pid in parent process, returns 0 in the child process
 ##dup2()
 
 `dup2(fd[1], STDOUT_FILENO)` redirect the stdout to fd[1], so whatever originally output to the terminal(stdout) will go to the pipe.
+
+## Useful link
+
+https://blog.csdn.net/wh128341/article/details/125906940 dup2 redirection, fd system, linux file system, inode, hard soft link, hard disk principle, (Chinese)
