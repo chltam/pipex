@@ -20,3 +20,6 @@ the pipe is a ONE way communication tool.
 
 fork() returns the child pid in parent process, returns 0 in the child process
 
+##dup2()
+
+`dup2(fd[1], STDOUT_FILENO)` redirect the stdout to fd[1], so whatever originally output to the terminal(stdout) will go to the pipe.
