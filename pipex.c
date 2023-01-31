@@ -17,9 +17,9 @@
 #include "./libft/libft.h"
 #include "pipex.h"
 
-void	error(char *str)
+void	ft_error(char *str)
 {
-	perror(str);
+	ft_printf("%s\n", str);
 	exit(EXIT_FAILURE);
 }
 
@@ -48,50 +48,73 @@ char	*get_path(char *cmd, char *envp[])
 			*allpath++;
 		}
 	}
-	return (0);	
-				
+	free(tempcmd);
+	ft_error("No such command");
 }
-int	pipex(char **argv, char **envp)
-{
-	int	fd[2];
-	int	outfile_fd;
-	char **cmd;
-	int child_id;
 
-	
-	pipe(fd);
+void	childlabour(int *fd, char **argv, char **envp)
+{
+	int		infile_fd;
+	char	**cmd;
+
+	infile_fd = open(argv[1], O_RDONLY);
+	if (infile_fd == -1)
+		ft_error("open infile failed");
+	cmd = ft_split(argv[2], ' ');
+	if (dup2(infile_fd, STDIN_FILENO) == -1)
+		ft_error("dup2 failed");
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		ft_error("dup2 failed");
+	close(fd[0]);
+	execve(get_path(cmd[0], envp), cmd, NULL);
+	ft_error("ERROR! child survived");
+}
+
+void	pipex(char **argv, char **envp)
+{
+	int		fd[2];
+	int		outfile_fd;
+	char	**cmd;
+	int		child_id;
+	int		infile_fd;
+
+	if (pipe(fd) == -1)
+		ft_error("pipe failed");
 	child_id = fork();
+	if (child_id == -1)
+		ft_error("fork failed");
 	if (child_id == 0)
 	{
-		int	infile_fd = open(argv[1], O_RDONLY);
-		cmd = ft_split(argv[2], ' ');
-		dup2(infile_fd, STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		execve(get_path(cmd[0], envp), cmd, NULL);
-
+		// infile_fd = open(argv[1], O_RDONLY);
+		// cmd = ft_split(argv[2], ' ');
+		// dup2(infile_fd, STDIN_FILENO);
+		// dup2(fd[1], STDOUT_FILENO);
+		// close(fd[0]);
+		// execve(get_path(cmd[0], envp), cmd, NULL);
+		childlabour(fd, argv, envp);
 	}
 	else
 	{
 		waitpid(child_id, NULL, 0);
 		outfile_fd = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		if (outfile_fd == -1)
+			ft_error("open outfile failed");
 		cmd = ft_split(argv[3], ' ');
-		dup2(outfile_fd, STDOUT_FILENO);
-		dup2(fd[0], STDIN_FILENO);
+		if (dup2(outfile_fd, STDOUT_FILENO) == -1)
+			ft_error("dup2 failed");
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			ft_error("dup2 failed");
 		close(fd[1]);
 		execve(get_path(cmd[0], envp), cmd, NULL);
-	}
-	
-	exit(0);
+		ft_error("ERROR");
+	}	
+	//ft_error("ERROR");
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	if (argc != 5)
-		error("ERROR");
-
+		ft_error("argc ERROR");
 	pipex(argv, envp);
 	return (0);
-
-
 }

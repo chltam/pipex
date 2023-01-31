@@ -15,10 +15,15 @@ CC := cc
 CFLAGS := -Wall -Werror -Wextra
 INCLUDE := ./libft/libft.a
 SRCS := pipex.c
+SRCS_BONUS := pipex_bonus.c
 
 $(NAME) : $(SRCS)
-	make -C libft
+	@make -C libft
+	@echo "\033[0;92mPipex\033[0;39m"
 	$(CC) $(SRCS) $(INCLUDE) -o $(NAME)
+
+bonus : $(SRCS_BONUS)
+	$(CC) $(SRCS_BONUS) $(INCLUDE) -o $(NAME)
 
 all: $(NAME)
 
