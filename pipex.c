@@ -79,7 +79,7 @@ void	pipex(char **argv, char **envp)
 int	main(int argc, char *argv[], char *envp[])
 {
 	if (argc != 5)
-		ft_error("argc ERROR");
+		ft_error("argc error");
 	pipex(argv, envp);
 	return (0);
 }

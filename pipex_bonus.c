@@ -95,7 +95,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc < 5)
 		ft_error("argc error");
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		if (argc < 6)
+			ft_error("argc error");
 		medic(arg);
+	}	
 	else
 		pipex(arg);
 	return (0);

@@ -5,39 +5,29 @@
 #                                                     +:+ +:+         +:+      #
 #    By: htam <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/26 21:22:32 by htam              #+#    #+#              #
-#    Updated: 2023/01/26 21:22:34 by htam             ###   ########.fr        #
+#    Created: 2022/12/28 19:12:42 by htam              #+#    #+#              #
+#    Updated: 2022/12/28 19:12:44 by htam             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-NAME := pipex
-BONUS := pipex_bonus
-CC := cc
-CFLAGS := -Wall -Werror -Wextra
-INCLUDE := ./libft/libft.a
-SRCS := pipex.c get_path.c
-SRCS_BONUS := pipex_bonus.c get_path.c medic.c get_next_line.c get_next_line_utils.c
-
-$(NAME) : $(SRCS)
-	@make -C libft
-	@echo "\033[0;92mPipex\033[0;39m"
-	$(CC) $(CFLAGS) $(SRCS) $(INCLUDE) -o $(NAME)
-
-$(BONUS) : $(SRCS_BONUS)
-	@make -C libft
-	@echo "\033[0;92mPipex bonus\033[0;39m"
-	$(CC) $(CFLAGS) $(SRCS_BONUS) $(INCLUDE) -o $(BONUS)
+NAME := libftprintf.a
+CC := @cc
+CFLAGS := -Werror -Wextra -Wall
+SRCS := ft_printf.c \
+		print_char.c \
+		print_number.c \
+		print_hex.c
+OBJS := $(SRCS:.c=.o)
+$(NAME): $(OBJS)
+		@ar -rcs $(NAME) $(OBJS)
+		@echo "\033[0;92mlibftprintf.a compiled.\033[0;039m"
 
 all: $(NAME)
-
-bonus: $(BONUS)
-
 clean:
-	rm -rf $(NAME)
-
+	rm -f $(OBJS)
 fclean:
-	make fclean -C libft
-	rm -rf $(NAME)
-	rm -rf $(BONUS)
+	@rm -f $(OBJS)
+	@echo "\033[0;92mft_printf object file cleaned\033[0;39m"
+	@rm -f $(NAME)
+	@echo "\033[0;92mlibftprintf.a cleaned\033[0;39m"
 
-re:fclean all
+re: fclean all
