@@ -17,8 +17,6 @@ void	get_input_child(int *fd, t_arg arg)
 	char	*str;
 
 	limiter_len = ft_strlen(arg.v[2]);
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		ft_error("dup2 error");
 	close(fd[0]);
 	while (1)
 	{
@@ -27,7 +25,7 @@ void	get_input_child(int *fd, t_arg arg)
 			&& str[limiter_len] == '\n')
 		{
 			free(str);
-			exit(1);
+			exit(0);
 		}
 		write(fd[1], str, ft_strlen(str));
 		free(str);

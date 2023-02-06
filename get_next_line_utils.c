@@ -38,3 +38,32 @@ char	*ft_gnljoin(char *s1, char *s2)
 	free(s1);
 	return (newstr);
 }
+
+char	*ft_substr_mod(char const *s, unsigned int start, size_t len)
+{
+	unsigned int		n;
+	unsigned int		i;
+	char				*substr;
+
+	n = 0;
+	i = 0;
+	substr = malloc(sizeof(*substr) * (len + 1));
+	if (!substr)
+		return (NULL);
+	while (s[n])
+	{
+		if (n >= start && i < len)
+		{
+			substr[i] = s[n];
+			i++;
+		}
+		n++;
+	}
+	substr[i] = 0;
+	if (substr[0] == 0)
+	{
+		free(substr);
+		return (NULL);
+	}
+	return (substr);
+}

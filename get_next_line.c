@@ -61,7 +61,7 @@ char	*ft_trimstash(char *stash)
 	char	*output;
 
 	nlpos = ft_nlcheck(stash);
-	output = ft_substr(stash, 0, nlpos + 1);
+	output = ft_substr_mod(stash, 0, nlpos + 1);
 	return (output);
 }
 
@@ -73,7 +73,7 @@ char	*ft_newstash(char *stash)
 
 	stash_len = ft_strlen(stash);
 	nlpos = ft_nlcheck(stash);
-	newstr = ft_substr(stash, nlpos + 1, stash_len - nlpos);
+	newstr = ft_substr_mod(stash, nlpos + 1, stash_len - nlpos);
 	free(stash);
 	return (newstr);
 }

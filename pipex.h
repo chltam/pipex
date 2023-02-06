@@ -32,6 +32,7 @@ void	ft_error(char *str);
 char	*valid_path(char **allpath, char *cmd);
 char	*get_path(char *cmd, char *envp[]);
 char	*get_next_line(int fd);
+char	*ft_substr_mod(char const *s, unsigned int start, size_t len);
 char	*ft_gnljoin(char *s1, char *s2);
 void	medic(t_arg arg);
 
