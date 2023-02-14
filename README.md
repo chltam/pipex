@@ -1,5 +1,11 @@
 # pipex
 
+## Check
+
+use `valgrind --track-fds=yes` to check if all fds are properly closed.
+
+check memory leak when error encountered.
+
 ## Fact
 
 every process has their own file descriptor system, including STDIN and STDOUT 
